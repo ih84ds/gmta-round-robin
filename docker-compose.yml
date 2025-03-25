@@ -1,0 +1,20 @@
+services:
+  builder:
+    image: gcr.io/bazel-public/bazel:8.1.1
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: ''
+    command: ./bin/run-forever.sh
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app/backend
+    environment:
+      PORT: 8080
+      GIN_MODE: debug
+    ports:
+      - 8080:8080
